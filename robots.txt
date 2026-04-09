@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://adhdflow-eta.vercel.app/sitemap.xml
