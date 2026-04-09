@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADHD Flow — Daily Brain System</title>
+
+  <!-- SEO -->
+  <meta name="description" content="A daily productivity system built for ADHD brains. Pick your brain state, set 3 tasks, start a focus block. No account, no server — works instantly in any browser.">
+  <meta name="keywords" content="ADHD planner, ADHD productivity, ADHD task manager, neurodivergent planner, focus timer ADHD, ADHD daily system, executive function tool, ADHD organization, pomodoro ADHD, ADHD brain system">
+  <meta name="author" content="ADHD Flow">
+  <link rel="canonical" href="https://adhdflow-eta.vercel.app/">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Open Graph (Pinterest, Facebook, Reddit link previews) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://adhdflow-eta.vercel.app/">
+  <meta property="og:title" content="ADHD Flow — Daily Brain System">
+  <meta property="og:description" content="Finally a productivity tool that works with your ADHD brain, not against it. Brain state check-in, 3-task limit, focus timer, and SOS Reset. No account needed.">
+  <meta property="og:image" content="https://adhdflow-eta.vercel.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="ADHD Flow">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ADHD Flow — Daily Brain System">
+  <meta name="twitter:description" content="Finally a productivity tool that works with your ADHD brain, not against it. Brain state check-in, 3-task limit, focus timer, and SOS Reset. No account needed.">
+  <meta name="twitter:image" content="https://adhdflow-eta.vercel.app/og-image.png">
+
+  <!-- Pinterest -->
+  <meta name="pinterest:description" content="ADHD Flow — A daily system built for how your brain actually works. Pick your brain state, limit to 3 tasks, start a focus block. No account needed.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     GATE
+═══════════════════════════════════════ -->
+<div id="gate" class="gate">
+  <div class="gate__card">
+
+    <div class="gate__icon">
+      <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M28 10C20.3 10 14 16.3 14 24c0 4.2 1.8 7.9 4.7 10.5L17 46h5l2-4h8l2 4h5l-1.7-11.5C40.2 31.9 42 28.2 42 24c0-7.7-6.3-14-14-14z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+        <path d="M22 26c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M24 34h8M25.5 39h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="28" cy="7" r="2" fill="currentColor" opacity="0.5"/>
+        <circle cx="10" cy="20" r="1.5" fill="currentColor" opacity="0.3"/>
+        <circle cx="46" cy="20" r="1.5" fill="currentColor" opacity="0.3"/>
+      </svg>
+    </div>
+
+    <h1 class="gate__title">ADHD Flow</h1>
+    <p class="gate__subtitle">A daily system built for how<br>your brain actually works.</p>
+
+    <div class="gate__form">
+      <input id="code-input" class="gate__input" type="text" placeholder="ADHF-XXXX-XXXX" maxlength="14" autocomplete="off" spellcheck="false">
+      <button id="unlock-btn" class="gate__btn">Unlock</button>
+    </div>
+    <p id="gate-error" class="gate__error"></p>
+
+    <p class="gate__note">No account. No login. Works in any browser.</p>
+
+    <div class="gate__dots">
+      <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2l2.4 5h5.3l-4.3 3.1 1.7 5.1L10 12.3l-5.1 2.9 1.7-5.1L2.3 7h5.3z"/></svg>
+      <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2l2.4 5h5.3l-4.3 3.1 1.7 5.1L10 12.3l-5.1 2.9 1.7-5.1L2.3 7h5.3z"/></svg>
+      <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2l2.4 5h5.3l-4.3 3.1 1.7 5.1L10 12.3l-5.1 2.9 1.7-5.1L2.3 7h5.3z"/></svg>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     APP
+═══════════════════════════════════════ -->
+<div id="app" class="app hidden">
+
+  <!-- ── TOPBAR ── -->
+  <header class="topbar">
+    <div class="topbar__left">
+      <svg class="topbar__logo" viewBox="0 0 24 24" fill="none">
+        <path d="M12 4C9 4 6.5 6.5 6.5 9.5c0 1.8.8 3.4 2 4.5L7.5 20h3l1-2h3l1 2h3l-1-6c1.2-1.1 2-2.7 2-4.5C19.5 6.5 17 4 12 4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M10 11c0-1.1.9-2 2-2s2 .9 2 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <span class="topbar__brand">ADHD Flow</span>
+      <span class="topbar__date" id="topbar-date"></span>
+    </div>
+
+    <div class="topbar__center">
+      <button id="state-pill" class="state-pill">
+        <span id="state-pill-emoji" class="state-pill__emoji"></span>
+        <span id="state-pill-name" class="state-pill__name">Set brain state</span>
+        <svg class="state-pill__chevron" viewBox="0 0 16 16" fill="none">
+          <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="topbar__right">
+      <span class="topbar__wins" id="topbar-wins"></span>
+      <button id="newday-btn" class="btn-newday" title="Start a new day">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+          <path d="M8 2v2M8 12v2M2 8h2M12 8h2M4.1 4.1l1.4 1.4M10.5 10.5l1.4 1.4M4.1 11.9l1.4-1.4M10.5 5.5l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        New Day
+      </button>
+    </div>
+  </header>
+
+  <!-- ── MAIN ── -->
+  <main class="main-layout">
+
+    <!-- Left: Today -->
+    <div class="col-today">
+
+      <!-- Brain State Card -->
+      <div class="state-card" id="state-card">
+        <div class="state-card__empty" id="state-card-empty">
+          <p>How's your brain today?</p>
+          <button id="set-state-btn" class="btn-set-state">Set Brain State</button>
+        </div>
+        <div class="state-card__content hidden" id="state-card-content">
+          <div class="state-card__top">
+            <span class="state-card__emoji" id="sc-emoji"></span>
+            <div class="state-card__info">
+              <div class="state-card__name" id="sc-name"></div>
+              <div class="state-card__tagline" id="sc-tagline"></div>
+            </div>
+            <button class="state-card__change" id="sc-change-btn" title="Change brain state">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M2 8a6 6 0 1 0 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M2 4v4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <ul class="state-card__tips" id="sc-tips"></ul>
+          <p class="state-card__hint" id="sc-hint"></p>
+        </div>
+      </div>
+
+      <!-- Today's 3 -->
+      <div class="today-panel">
+        <div class="today-panel__header">
+          <div class="today-panel__title-row">
+            <h2 class="today-panel__title">Today's 3</h2>
+            <span class="today-panel__sub">Max 3 tasks — the rule is the feature</span>
+          </div>
+          <span class="today-count" id="today-count">0 / 3</span>
+        </div>
+        <div class="today-slots" id="today-slots">
+          <!-- rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Focus Timer -->
+      <div class="timer-panel">
+        <div class="timer-panel__header">
+          <h2 class="timer-panel__title">Focus Block</h2>
+          <div class="timer-durations" id="timer-durations">
+            <button class="dur-btn active" data-min="15">15 min</button>
+            <button class="dur-btn" data-min="25">25 min</button>
+            <button class="dur-btn" data-min="45">45 min</button>
+          </div>
+        </div>
+        <div class="timer-display">
+          <svg class="timer-ring" viewBox="0 0 120 120">
+            <circle class="timer-ring__bg" cx="60" cy="60" r="52"/>
+            <circle class="timer-ring__progress" id="timer-progress" cx="60" cy="60" r="52"/>
+          </svg>
+          <div class="timer-inner">
+            <div class="timer-time" id="timer-time">15:00</div>
+            <div class="timer-label" id="timer-label">ready</div>
+          </div>
+        </div>
+        <div class="timer-controls">
+          <button id="timer-start" class="timer-btn timer-btn--start">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" id="timer-start-icon">
+              <path d="M5 3l8 5-8 5V3z" fill="currentColor"/>
+            </svg>
+            <span id="timer-start-text">Start</span>
+          </button>
+          <button id="timer-reset" class="timer-btn timer-btn--reset">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M2 8a6 6 0 1 0 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M2 4v4h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Reset
+          </button>
+        </div>
+        <p class="timer-status" id="timer-status">Pick a duration and start your focus block.</p>
+      </div>
+
+    </div>
+
+    <!-- Right: Queue -->
+    <div class="col-queue">
+      <div class="queue-panel">
+        <div class="queue-panel__header">
+          <h2 class="queue-panel__title">Task Queue</h2>
+          <button id="add-task-btn" class="btn-add-task">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+              <path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Add Task
+          </button>
+        </div>
+        <div class="queue-list" id="queue-list">
+          <!-- rendered by JS -->
+        </div>
+        <div class="queue-empty" id="queue-empty" style="display:none">
+          <div class="queue-empty__icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="1.5" opacity="0.3"/>
+              <path d="M11 16l3.5 3.5 6.5-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p>Queue is clear!</p>
+          <button class="btn-add-inline" id="add-task-inline">+ Add a task</button>
+        </div>
+      </div>
+
+      <!-- Energy Guide -->
+      <div class="energy-guide">
+        <div class="energy-guide__title">Energy Guide</div>
+        <div class="energy-guide__row">
+          <span class="edot edot--high"></span>
+          <span class="energy-guide__label">High — Needs real focus</span>
+        </div>
+        <div class="energy-guide__row">
+          <span class="edot edot--medium"></span>
+          <span class="energy-guide__label">Medium — Moderate effort</span>
+        </div>
+        <div class="energy-guide__row">
+          <span class="edot edot--low"></span>
+          <span class="energy-guide__label">Low — Can do half-awake</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- SOS Button -->
+<button id="sos-btn" class="sos-btn" title="Overwhelmed? Click here.">
+  <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+    <path d="M10 2l2 5h5l-4 3 1.5 5L10 12l-4.5 3 1.5-5-4-3h5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+  </svg>
+  <span>SOS</span>
+</button>
+
+<!-- ═══════════════════════════════════════
+     MODALS
+═══════════════════════════════════════ -->
+
+<!-- Brain State Selector -->
+<div id="modal-brainstate" class="modal-overlay hidden">
+  <div class="modal-box modal-brainstate">
+    <div class="modal-title-wrap">
+      <h2 class="modal-title">How's your brain right now?</h2>
+      <p class="modal-sub">Pick the state that feels most true. No wrong answer — you can change it anytime.</p>
+    </div>
+    <div class="modal-body">
+      <div class="state-grid" id="state-grid">
+        <!-- rendered by JS -->
+      </div>
+      <button id="modal-state-skip" class="btn-skip">Skip for now</button>
+    </div>
+  </div>
+</div>
+
+<!-- SOS Modal -->
+<div id="modal-sos" class="modal-overlay hidden">
+  <div class="modal-box modal-sos">
+    <div class="sos-top">
+      <div class="sos-icon-wrap">⚡</div>
+      <h2>Hey. Stop for a second.</h2>
+    </div>
+    <p class="sos-message">What you're feeling right now is <strong>not failure</strong>.<br>Your brain got overwhelmed. That's expected and normal.</p>
+    <div class="sos-steps">
+      <div class="sos-step">
+        <span class="sos-step__num">1</span>
+        <div>
+          <strong>Breathe</strong>
+          <p>Take 3 slow breaths. In for 4, out for 6.</p>
+        </div>
+      </div>
+      <div class="sos-step">
+        <span class="sos-step__num">2</span>
+        <div>
+          <strong>Find the smallest thing</strong>
+          <p>Look at your tasks. What's the tiniest one? That's your next step.</p>
+        </div>
+      </div>
+      <div class="sos-step">
+        <span class="sos-step__num">3</span>
+        <div>
+          <strong>Set 15 minutes</strong>
+          <p>Start the Focus Block timer. Just 15 minutes. You only need to start.</p>
+        </div>
+      </div>
+    </div>
+    <div class="sos-wins" id="sos-wins"></div>
+    <div class="sos-actions">
+      <button id="sos-ready" class="btn-primary">I'm ready to try</button>
+      <button id="sos-close" class="btn-ghost">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Task Modal -->
+<div id="modal-addtask" class="modal-overlay hidden">
+  <div class="modal-box modal-addtask">
+    <div class="modal-title-wrap">
+      <h2 class="modal-title">Add a task</h2>
+    </div>
+    <div class="modal-body">
+      <div class="addtask-form">
+        <input id="task-input" class="task-input" type="text" placeholder="What needs to get done?" maxlength="80" autocomplete="off">
+        <div class="form-row">
+          <label class="form-label">Energy needed</label>
+          <div class="energy-opts" id="energy-opts">
+            <button class="eopt" data-energy="low">
+              <span class="edot edot--low"></span> Low
+            </button>
+            <button class="eopt active" data-energy="medium">
+              <span class="edot edot--medium"></span> Medium
+            </button>
+            <button class="eopt" data-energy="high">
+              <span class="edot edot--high"></span> High
+            </button>
+          </div>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Add to</label>
+          <div class="where-opts" id="where-opts">
+            <button class="wopt active" data-where="queue">Queue</button>
+            <button class="wopt" data-where="today" id="where-today-btn">Today's 3</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button id="task-confirm" class="btn-primary">Add Task</button>
+        <button id="task-cancel" class="btn-ghost">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Day Summary Modal -->
+<div id="modal-daysummary" class="modal-overlay hidden">
+  <div class="modal-box modal-summary">
+    <div class="modal-title-wrap">
+      <h2 class="modal-title" id="summary-title">New day, fresh start.</h2>
+    </div>
+    <div class="summary-sun">🌅</div>
+    <p class="summary-message" id="summary-message"></p>
+    <div class="summary-stats" id="summary-stats"></div>
+    <p class="summary-note">Unfinished tasks have been moved back to your queue — nothing was deleted.</p>
+    <div class="summary-action">
+      <button id="summary-go" class="btn-primary">Let's go</button>
+    </div>
+  </div>
+</div>
+
+<script src="codes.js"></script>
+<script src="app.js"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "ADHD Flow",
+  "description": "A daily productivity system built for ADHD brains. Pick your brain state, set 3 tasks, start a focus block. No account, no server — works instantly in any browser.",
+  "url": "https://adhdflow-eta.vercel.app/",
+  "applicationCategory": "ProductivityApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "availability": "https://schema.org/InStock"
+  },
+  "featureList": [
+    "Brain State check-in",
+    "3-task daily limit",
+    "Focus Block timer",
+    "Task Queue",
+    "SOS Reset",
+    "Day Reset with win summary",
+    "Local-only privacy — no server, no account"
+  ]
+}
+</script>
+</body>
+</html>

@@ -1,2 +1,5 @@
 mockups/
 delivery/
+node_modules/
+package.json
+package-lock.json
